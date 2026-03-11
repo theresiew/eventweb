@@ -26,6 +26,10 @@ function SubmittedView({ setIsRegistered }) {
     }
   }
 
+  function goHome() {
+    navigate('/')
+  }
+
   return (
     <div className="min-h-screen bg-gray-950 text-white py-16 px-6">
       <div className="max-w-2xl mx-auto">
@@ -75,6 +79,11 @@ function SubmittedView({ setIsRegistered }) {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
+          <button
+            onClick={goHome}
+            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-xl transition duration-200">
+            🏠 Back to Home
+          </button>
           <button
             onClick={editRegistration}
             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition duration-200">
