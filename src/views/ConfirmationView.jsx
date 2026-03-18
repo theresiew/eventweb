@@ -1,76 +1,53 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import DetailList from '../components/DetailList'
+import { loadRegistration } from '../utils/registrationStorage'
 
 function ConfirmationView() {
   const navigate = useNavigate()
-  const [registration, setRegistration] = useState({})
+  const [registration] = useState(() => loadRegistration() || {})
 
-  useEffect(() => {
-    const saved = localStorage.getItem('registration')
-    if (saved) {
-      setRegistration(JSON.parse(saved))
-    }
-  }, [])
+  const registrationItems = [
+    { label: 'Full Name', value: registration.fullName },
+    { label: 'Email', value: registration.email },
+    { label: 'Phone', value: registration.phone },
+    { label: 'Organization', value: registration.organization },
+    { label: 'Ticket Type', value: registration.ticketType, valueClassName: 'text-sky-300' },
+    { label: 'Dietary Requirements', value: registration.dietary, fallback: 'None' },
+    { label: 'Additional Notes', value: registration.notes, fallback: 'None' },
+  ]
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex items-center justify-center px-6">
-      <div className="max-w-2xl w-full text-center">
-
-        <div className="text-8xl mb-6">🎉</div>
-
-        <h1 className="text-4xl font-extrabold text-white mb-4">Registration Successful!</h1>
-        <p className="text-gray-400 text-lg mb-8">
-          Thank you for registering! Your seat for the{' '}
-          <span className="text-blue-400 font-semibold">Tech Innovation Conference 2026</span>{' '}
-          has been reserved.
-        </p>
-
-        <div className="bg-gray-800 rounded-2xl p-8 shadow-xl mb-8 text-left">
-          <h2 className="text-xl font-bold text-blue-400 mb-6 text-center">📋 Registration Summary</h2>
-          <div className="space-y-4">
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Full Name</span>
-              <span className="text-white font-semibold">{registration.fullName}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Email</span>
-              <span className="text-white font-semibold">{registration.email}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Phone</span>
-              <span className="text-white font-semibold">{registration.phone}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Organization</span>
-              <span className="text-white font-semibold">{registration.organization || 'Not provided'}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Ticket Type</span>
-              <span className="text-blue-400 font-bold text-lg">{registration.ticketType}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Dietary Requirements</span>
-              <span className="text-white font-semibold">{registration.dietary || 'None'}</span>
-            </div>
-            <div className="flex justify-between pb-3">
-              <span className="text-gray-400">Additional Notes</span>
-              <span className="text-white font-semibold">{registration.notes || 'None'}</span>
-            </div>
+    <div className="flex min-h-screen items-center justify-center px-6 py-16 text-white">
+      <div className="w-full max-w-2xl text-center">
+        <div className="glass-panel rounded-[2rem] px-6 py-10 sm:px-8">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500/15 text-3xl font-black text-emerald-300">
+            OK
           </div>
-        </div>
 
-        <div className="bg-blue-900 border border-blue-700 rounded-xl p-4 mb-8">
-          <p className="text-blue-200 text-sm">
-            📧 A confirmation has been saved. You can return to this site anytime to view your registration details.
+          <h1 className="mt-6 text-4xl font-extrabold text-white">Registration Successful</h1>
+          <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300">
+            Thank you for registering. Your seat for <span className="font-semibold text-sky-300">Tech Innovation Conference 2026</span> has been reserved.
           </p>
+
+          <div className="mt-8 rounded-2xl border border-sky-400/20 bg-sky-500/10 p-4 text-left">
+            <p className="text-sm leading-7 text-sky-100">
+              A confirmation has been saved locally so you can come back and review your registration details anytime on this device.
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-[1.75rem] bg-slate-950/55 p-6 text-left">
+            <h2 className="mb-5 text-center text-xl font-bold text-white">Registration Summary</h2>
+            <DetailList items={registrationItems} />
+          </div>
+
+          <button
+            onClick={() => navigate('/')}
+            className="mt-8 rounded-full bg-sky-500 px-10 py-4 text-lg font-bold text-slate-950 transition duration-300 hover:bg-sky-400"
+          >
+            Back to Home
+          </button>
         </div>
-
-        <button
-          onClick={() => navigate('/')}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300">
-          🏠 Back to Home
-        </button>
-
       </div>
     </div>
   )

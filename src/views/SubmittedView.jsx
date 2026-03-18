@@ -1,18 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import DetailList from '../components/DetailList'
+import { clearRegistration, loadRegistration } from '../utils/registrationStorage'
 
 function SubmittedView({ setIsRegistered }) {
   const navigate = useNavigate()
-  const [registration, setRegistration] = useState({})
+  const [registration] = useState(() => loadRegistration() || {})
 
   useEffect(() => {
-    const saved = localStorage.getItem('registration')
-    if (saved) {
-      setRegistration(JSON.parse(saved))
-    } else {
+    if (!registration.fullName && !registration.email && !registration.phone) {
       navigate('/')
     }
-  }, [])
+  }, [navigate, registration])
 
   function editRegistration() {
     navigate('/register')
@@ -20,7 +19,7 @@ function SubmittedView({ setIsRegistered }) {
 
   function cancelRegistration() {
     if (window.confirm('Are you sure you want to cancel your registration?')) {
-      localStorage.removeItem('registration')
+      clearRegistration()
       setIsRegistered(false)
       navigate('/')
     }
@@ -30,72 +29,54 @@ function SubmittedView({ setIsRegistered }) {
     navigate('/')
   }
 
+  const registrationItems = [
+    { label: 'Full Name', value: registration.fullName },
+    { label: 'Email', value: registration.email },
+    { label: 'Phone', value: registration.phone },
+    { label: 'Organization', value: registration.organization },
+    { label: 'Ticket Type', value: registration.ticketType, valueClassName: 'text-sky-300' },
+    { label: 'Dietary Requirements', value: registration.dietary, fallback: 'None' },
+    { label: 'Additional Notes', value: registration.notes, fallback: 'None' },
+  ]
+
   return (
-    <div className="min-h-screen bg-gray-950 text-white py-16 px-6">
-      <div className="max-w-2xl mx-auto">
-
-        <div className="text-center mb-10">
-          <div className="text-7xl mb-4">👋</div>
-          <h1 className="text-4xl font-extrabold text-white mb-2">Welcome Back!</h1>
-          <p className="text-gray-400 text-lg">You have already registered for the conference</p>
+    <div className="min-h-screen px-6 py-16 text-white">
+      <div className="mx-auto max-w-3xl">
+        <div className="text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">Registered</p>
+          <h1 className="mt-3 text-4xl font-extrabold text-white">Welcome Back</h1>
+          <p className="mt-3 text-lg text-slate-300">You have already registered for the conference.</p>
         </div>
 
-        <div className="bg-green-900 border border-green-600 rounded-xl p-4 mb-8 text-center">
-          <p className="text-green-300 font-semibold">✅ Your registration is confirmed and your seat is reserved!</p>
+        <div className="mt-8 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-4 text-center">
+          <p className="font-semibold text-emerald-200">Your registration is confirmed and your seat is reserved.</p>
         </div>
 
-        <div className="bg-gray-800 rounded-2xl p-8 shadow-xl mb-8">
-          <h2 className="text-xl font-bold text-blue-400 mb-6 text-center">📋 Your Registration Details</h2>
-          <div className="space-y-4">
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Full Name</span>
-              <span className="text-white font-semibold">{registration.fullName}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Email</span>
-              <span className="text-white font-semibold">{registration.email}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Phone</span>
-              <span className="text-white font-semibold">{registration.phone}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Organization</span>
-              <span className="text-white font-semibold">{registration.organization || 'Not provided'}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Ticket Type</span>
-              <span className="text-blue-400 font-bold text-lg">{registration.ticketType}</span>
-            </div>
-            <div className="flex justify-between border-b border-gray-700 pb-3">
-              <span className="text-gray-400">Dietary Requirements</span>
-              <span className="text-white font-semibold">{registration.dietary || 'None'}</span>
-            </div>
-            <div className="flex justify-between pb-3">
-              <span className="text-gray-400">Additional Notes</span>
-              <span className="text-white font-semibold">{registration.notes || 'None'}</span>
-            </div>
-          </div>
+        <div className="glass-panel mt-8 rounded-[2rem] p-8 shadow-xl">
+          <h2 className="mb-6 text-center text-xl font-bold text-white">Your Registration Details</h2>
+          <DetailList items={registrationItems} />
         </div>
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <button
             onClick={goHome}
-            className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-xl transition duration-200">
-            🏠 Back to Home
+            className="rounded-xl border border-white/10 bg-slate-900/70 py-4 font-bold text-white transition duration-200 hover:bg-slate-800"
+          >
+            Back to Home
           </button>
           <button
             onClick={editRegistration}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition duration-200">
-            ✏️ Edit My Registration
+            className="rounded-xl bg-sky-500 py-4 font-bold text-slate-950 transition duration-200 hover:bg-sky-400"
+          >
+            Edit My Registration
           </button>
           <button
             onClick={cancelRegistration}
-            className="bg-red-700 hover:bg-red-800 text-white font-bold py-4 rounded-xl transition duration-200">
-            ❌ Cancel My Registration
+            className="rounded-xl bg-rose-600 py-4 font-bold text-white transition duration-200 hover:bg-rose-500"
+          >
+            Cancel My Registration
           </button>
         </div>
-
       </div>
     </div>
   )

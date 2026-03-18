@@ -16,71 +16,72 @@ function RegistrationFormView({ formData, updateForm }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white py-16 px-6">
-
-      <div className="max-w-2xl mx-auto text-center mb-10">
-        <h1 className="text-4xl font-extrabold text-white mb-2">📝 Register for the Conference</h1>
-        <p className="text-gray-400">Fill in your details below to secure your seat</p>
+    <div className="min-h-screen px-6 py-16 text-white">
+      <div className="mx-auto mb-10 max-w-2xl text-center">
+        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">Registration</p>
+        <h1 className="mt-3 text-4xl font-extrabold text-white">Register for the Conference</h1>
+        <p className="mt-3 text-slate-300">Fill in your details below to secure your seat.</p>
       </div>
 
-      <div className="max-w-2xl mx-auto bg-gray-800 rounded-2xl p-8 shadow-xl">
-
+      <div className="glass-panel mx-auto max-w-2xl rounded-[2rem] p-8 shadow-xl">
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Full Name *</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Full Name *</label>
           <input
             type="text"
             value={formData.fullName}
             onChange={e => handleInput('fullName', e.target.value)}
             placeholder="Enter your full name"
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Email Address *</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Email Address *</label>
           <input
             type="email"
             value={formData.email}
             onChange={e => handleInput('email', e.target.value)}
             placeholder="Enter your email address"
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Phone Number *</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Phone Number *</label>
           <input
             type="tel"
             value={formData.phone}
             onChange={e => handleInput('phone', e.target.value)}
             placeholder="Enter your phone number"
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Organization / Institution</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Organization / Institution</label>
           <input
             type="text"
             value={formData.organization}
             onChange={e => handleInput('organization', e.target.value)}
             placeholder="Enter your organization or institution"
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Ticket Type *</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Ticket Type *</label>
           <div className="grid grid-cols-3 gap-4">
             {['Standard', 'VIP', 'Student'].map(ticket => (
               <button
                 key={ticket}
+                type="button"
                 onClick={() => handleInput('ticketType', ticket)}
-                className={`border-2 rounded-xl py-3 font-semibold transition duration-200 ${
+                className={`rounded-xl border-2 py-3 font-semibold transition duration-200 ${
                   formData.ticketType === ticket
-                    ? 'bg-blue-600 text-white border-blue-500'
-                    : 'bg-gray-700 text-gray-300 border-gray-600 hover:bg-gray-600'
-                }`}>
+                    ? 'border-sky-400 bg-sky-500 text-slate-950'
+                    : 'border-white/10 bg-slate-900/60 text-slate-200 hover:bg-slate-800'
+                }`}
+              >
                 {ticket}
               </button>
             ))}
@@ -88,11 +89,12 @@ function RegistrationFormView({ formData, updateForm }) {
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Dietary Requirements</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Dietary Requirements</label>
           <select
             value={formData.dietary}
             onChange={e => handleInput('dietary', e.target.value)}
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            className="w-full rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
+          >
             <option value="">No special requirements</option>
             <option value="Vegetarian">Vegetarian</option>
             <option value="Vegan">Vegan</option>
@@ -103,29 +105,30 @@ function RegistrationFormView({ formData, updateForm }) {
         </div>
 
         <div className="mb-8">
-          <label className="block text-sm font-semibold text-blue-400 mb-2">Additional Notes</label>
+          <label className="mb-2 block text-sm font-semibold text-sky-300">Additional Notes</label>
           <textarea
             value={formData.notes}
             onChange={e => handleInput('notes', e.target.value)}
             placeholder="Any additional comments or requests..."
             rows="4"
-            className="w-full bg-gray-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none">
-          </textarea>
+            className="w-full resize-none rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row">
           <button
             onClick={() => navigate('/')}
-            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-xl transition duration-200">
-            ← Back
+            className="flex-1 rounded-xl border border-white/10 bg-slate-900/70 py-4 font-bold text-white transition duration-200 hover:bg-slate-800"
+          >
+            Back
           </button>
           <button
             onClick={goToReview}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition duration-200">
-            Review Registration →
+            className="flex-1 rounded-xl bg-sky-500 py-4 font-bold text-slate-950 transition duration-200 hover:bg-sky-400"
+          >
+            Review Registration
           </button>
         </div>
-
       </div>
     </div>
   )

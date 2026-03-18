@@ -1,69 +1,52 @@
 import { useNavigate } from 'react-router-dom'
+import DetailList from '../components/DetailList'
+import { saveRegistration } from '../utils/registrationStorage'
 
 function ReviewView({ formData, resetForm, setIsRegistered }) {
   const navigate = useNavigate()
 
   function confirmRegistration() {
-    localStorage.setItem('registration', JSON.stringify(formData))
+    saveRegistration(formData)
     setIsRegistered(true)
     resetForm()
     navigate('/confirmation')
   }
 
-  return (
-    <div className="min-h-screen bg-gray-950 text-white py-16 px-6">
+  const reviewItems = [
+    { label: 'Full Name', value: formData.fullName },
+    { label: 'Email Address', value: formData.email },
+    { label: 'Phone Number', value: formData.phone },
+    { label: 'Organization', value: formData.organization },
+    { label: 'Ticket Type', value: formData.ticketType, valueClassName: 'text-sky-300' },
+    { label: 'Dietary Requirements', value: formData.dietary, fallback: 'None' },
+    { label: 'Additional Notes', value: formData.notes, fallback: 'None' },
+  ]
 
-      <div className="max-w-2xl mx-auto text-center mb-10">
-        <h1 className="text-4xl font-extrabold text-white mb-2">🔍 Review Your Registration</h1>
-        <p className="text-gray-400">Please confirm your details before submitting</p>
+  return (
+    <div className="min-h-screen px-6 py-16 text-white">
+      <div className="mx-auto mb-10 max-w-2xl text-center">
+        <p className="text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">Final Check</p>
+        <h1 className="mt-3 text-4xl font-extrabold text-white">Review Your Registration</h1>
+        <p className="mt-3 text-slate-300">Please confirm your details before submitting.</p>
       </div>
 
-      <div className="max-w-2xl mx-auto bg-gray-800 rounded-2xl p-8 shadow-xl">
+      <div className="glass-panel mx-auto max-w-2xl rounded-[2rem] p-8 shadow-xl">
+        <DetailList items={reviewItems} />
 
-        <div className="space-y-4 mb-8">
-          <div className="flex justify-between border-b border-gray-700 pb-3">
-            <span className="text-gray-400 font-medium">Full Name</span>
-            <span className="text-white font-semibold">{formData.fullName}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-700 pb-3">
-            <span className="text-gray-400 font-medium">Email Address</span>
-            <span className="text-white font-semibold">{formData.email}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-700 pb-3">
-            <span className="text-gray-400 font-medium">Phone Number</span>
-            <span className="text-white font-semibold">{formData.phone}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-700 pb-3">
-            <span className="text-gray-400 font-medium">Organization</span>
-            <span className="text-white font-semibold">{formData.organization || 'Not provided'}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-700 pb-3">
-            <span className="text-gray-400 font-medium">Ticket Type</span>
-            <span className="text-blue-400 font-bold">{formData.ticketType}</span>
-          </div>
-          <div className="flex justify-between border-b border-gray-700 pb-3">
-            <span className="text-gray-400 font-medium">Dietary Requirements</span>
-            <span className="text-white font-semibold">{formData.dietary || 'None'}</span>
-          </div>
-          <div className="flex justify-between pb-3">
-            <span className="text-gray-400 font-medium">Additional Notes</span>
-            <span className="text-white font-semibold">{formData.notes || 'None'}</span>
-          </div>
-        </div>
-
-        <div className="flex gap-4">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
           <button
             onClick={() => navigate('/register')}
-            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-4 rounded-xl transition duration-200">
-            ← Edit Info
+            className="flex-1 rounded-xl border border-white/10 bg-slate-900/70 py-4 font-bold text-white transition duration-200 hover:bg-slate-800"
+          >
+            Edit Info
           </button>
           <button
             onClick={confirmRegistration}
-            className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl transition duration-200">
-            ✅ Confirm Registration
+            className="flex-1 rounded-xl bg-emerald-500 py-4 font-bold text-slate-950 transition duration-200 hover:bg-emerald-400"
+          >
+            Confirm Registration
           </button>
         </div>
-
       </div>
     </div>
   )
