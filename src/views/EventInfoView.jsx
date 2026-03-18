@@ -6,7 +6,7 @@ function EventInfoView() {
   return (
     <div className="min-h-screen bg-gray-950 text-white">
 
-      {/* Hero Section */}
+    
       <div className="relative bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900 py-24 px-6 text-center">
         <h1 className="text-5xl font-extrabold tracking-tight text-white mb-4">
           🚀 Tech Innovation Conference 2026
@@ -24,7 +24,7 @@ function EventInfoView() {
         </button>
       </div>
 
-      {/* Event Images */}
+     
       <div className="max-w-5xl mx-auto px-6 py-16">
         <h2 className="text-3xl font-bold text-center text-white mb-10">📸 Event Gallery</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -37,7 +37,7 @@ function EventInfoView() {
         </div>
       </div>
 
-      {/* Conference Details */}
+  
       <div className="max-w-5xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="bg-gray-800 rounded-2xl p-6 text-center shadow-md">
           <div className="text-4xl mb-3">📅</div>
@@ -59,7 +59,7 @@ function EventInfoView() {
         </div>
       </div>
 
-      {/* Key Speakers */}
+     
       <div className="bg-gray-900 py-16 px-6">
         <h2 className="text-3xl font-bold text-center text-white mb-10">🎤 Key Speakers</h2>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -81,7 +81,7 @@ function EventInfoView() {
         </div>
       </div>
 
-      {/* Topics */}
+      
       <div className="max-w-5xl mx-auto px-6 py-16">
         <h2 className="text-3xl font-bold text-center text-white mb-10">🔥 Topics Covered</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
